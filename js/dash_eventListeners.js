@@ -265,6 +265,9 @@ function requestNewCard(e) {
                 if (json.Error === undefined) {
                     emptyDiv(document.querySelector('.new-card-modal'));
                     document.querySelector('.new-card-modal').appendChild(getChild(CC_SUCCESS(json)));
+                    emptyDiv(document.querySelector('#cards .cards-container'));
+                    emptyDiv(document.querySelector('#cards .info-container'));
+                    generateSection('Cards');
                 } else {
                     print_error(inputs[0], json.Error);
                 }
