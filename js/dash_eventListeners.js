@@ -210,7 +210,6 @@ function changeStock(e) {
 }
 
 //set as favorite card
-
 function setAsFavorite(e) {
     const num = e.currentTarget.dataset.num;
     var data = new FormData();
@@ -231,6 +230,46 @@ function setAsFavorite(e) {
                 document.querySelector('#cards #loading').remove();
             }
         });
+}
+
+//create add card modal
+function createModal() {
+    request_bancomat_balance().then((json) => {
+        const modal = document.querySelector('body').prepend(getChild(ADD_CARD_MODAL_TEMPLATE(json.Balance)));
+        document.querySelector('.modal-container #close').addEventListener('click', closeModal);
+        document.querySelector('.modal-container').addEventListener('click', closeModal);
+        document.querySelector('.modal-container .button').addEventListener('click', requestNewCard);
+    });
+}
+
+//destroy add card modal
+function closeModal(e) {
+    if (e.target.id === 'close') document.querySelector('.modal-container').remove();
+    else if (e.target.classList.contains('modal-container')) document.querySelector('.modal-container').remove();
+}
+
+//Returns a new debit card if conditions are respected
+function requestNewCard(e) {
+    const elem = e.currentTarget;
+    const inputs = elem.closest('form').querySelectorAll('input');
+    e.preventDefault();
+    const form = elem.closest('form');
+    if (!check_fill(inputs)) {
+        fetch('php/add_new_card.php', {
+                method: 'POST',
+                credentials: 'same-origin',
+                body: new FormData(form)
+            })
+            .then(onResponse)
+            .then((json) => {
+                if (json.Error === undefined) {
+                    emptyDiv(document.querySelector('.new-card-modal'));
+                    document.querySelector('.new-card-modal').appendChild(getChild(CC_SUCCESS(json)));
+                } else {
+                    print_error(inputs[0], json.Error);
+                }
+            });
+    }
 }
 
 //log-out event listener
@@ -263,6 +302,8 @@ removeFilter.addEventListener('click', removeAllFilters);
 searchInput.addEventListener('keyup', search);
 searchClear.addEventListener('click', clearSearch);
 burger_button.addEventListener('click', openCloseMenu);
+
+document.querySelector('#cards #add').addEventListener('click', createModal);
 
 for (let key of showAllTexts) {
     if (key.dataset.link !== undefined) key.addEventListener('click', changeSection);

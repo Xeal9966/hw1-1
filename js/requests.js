@@ -70,6 +70,18 @@ function request_transactions() {
         });
 }
 
+//Request for bancomat balance
+function request_bancomat_balance() {
+    return fetch('php/request_bancomat_balance.php', {
+            method: 'POST',
+            credentials: 'same-origin'
+        })
+        .then(onResponse)
+        .then((json) => {
+            return json;
+        });
+}
+
 //Returns logged user profile info
 function request_account_data() {
     return fetch('php/request_account_data.php', {

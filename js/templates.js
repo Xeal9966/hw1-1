@@ -1,13 +1,3 @@
-/*const CC_TEMPLATE = (card) => `
-<div class="cc" data-active='false' data-number="${card.Number}">
-    <img class="pattern" src="${card.src}" alt="Pattern">
-    <div class="overlay"></div>
-    <img src="images/icons/${card.Vendor}.svg" alt="CC Logo">
-    <span class="number"> <span class="asterisk">**** </span><span class="asterisk">**** </span>**** ${card.Number}</span>
-    <span class="date">${card.Month}/${card.Year}</span>
-    <span class="type">${card.Type}</span>
-</div>`;
-*/
 const CC_TEMPLATE = (card) => `
 <div class="cc" data-active="false" data-number="${card.Number}">
     <img class="pattern" src="${card.src}" alt="Pattern">
@@ -309,3 +299,86 @@ const MOBILE_PROFILE_INFO_TEMPLATE = (info) => `
     <div><span>Hello,</span> <span id="profile-name">${info.name} ${info.surname}</span></div>
     <img id='profile-image' src="images/${info.src}" alt="Profile Image">
 </div>`;
+
+const ADD_CARD_MODAL_TEMPLATE = (info) => `
+<div class="modal-container">
+<div class="new-card-modal">
+    <div class="title">
+        <h1>Create new debit card</h1>
+        <img id="close" src="images/icons/clear.svg" alt="clear">
+    </div>
+    <form>
+        <div class="form-element">
+            <h2>Available funds</h2>
+            <div class="form-box">
+                <img class="form-icon" src="images/icons/funds.svg" alt="icon">
+                <span>${info}</span>
+                <h3>EUR</h3>
+            </div>
+        </div>
+        <div class="form-element">
+            <h2>Add balance (Max 1500 EUR)</h2>
+            <div class="form-box">
+                <img class="form-icon" src="images/icons/funds.svg" alt="icon">
+                <input name='Value' type="text" placeholder="Enter a value">
+                <h3>EUR</h3>
+            </div>
+        </div>
+        <input type="submit" class='button' value="Request new card">
+    </form>
+</div>
+</div>`;
+
+const CC_SUCCESS = (card) => `
+<div>
+    <div class="title">
+        <h1>Card created successfully</h1>
+        <img id="close" src="images/icons/clear.svg" alt="clear">
+    </div>
+    <div class="form-element">
+        <h2>Number</h2>
+        <div class="form-box">
+            <span>${card.Number}</span>
+        </div>
+    </div>
+    <div class="form-element">
+        <h2>Expiry Date</h2>
+        <div class="form-box">
+            <span>${card.Month}/${card.Year}</span>
+        </div>
+    </div>
+    <div class="form-element">
+        <h2>CVV</h2>
+        <div class="form-box">
+            <span>${card.CVV}</span>
+        </div>
+    </div>
+    <div class="form-element">
+        <h2>PIN</h2>
+        <div class="form-box">
+            <span>${card.Pin}</span>
+        </div>
+    </div>
+    <div class="form-element">
+        <h2>Try to not forget these data!</h2>
+    </div>
+</div>`;
+
+const ERROR_TEMPLATE = (error_text) => `
+<div class="form-error"><img src="images/icons/error.svg" alt="Error"><span>${error_text}</span></div>
+`;
+
+const CHECKMARK_TEMPLATE = () => `
+<div class="checkmark-container">
+    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
+        <circle class="path circle" fill="none" stroke="#2BC56B" stroke-width="6" stroke-miterlimit="10" cx="65.1" cy="65.1" r="62.1"/>
+        <polyline class="path check" fill="none" stroke="#2BC56B" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" points="100.2,40.2 51.5,88.8 29.8,67.5 "/>
+        </svg>
+    <div class="text-container">
+        <h1>Thanks for being awesome!</h1>
+        <h2>You are now registered to Easy Bank. </h2>
+    </div>
+    <span>Your browser should redirect you to login page soon. If anything happen click the button below </span>
+    <div class="form-button">Go to login</div>
+</div>
+`;
